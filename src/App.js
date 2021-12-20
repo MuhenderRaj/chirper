@@ -70,11 +70,11 @@ class App extends React.Component {
             }
         )
 
-        let body = await res.json()
-        this.setState({posts: body})
+        let body = await res.text()
         
         if (! res.ok){
             console.log(res.status)
+            console.log(body)
         }
     }
     
