@@ -72,10 +72,8 @@ class App extends React.Component {
 
         let body = await res.text()
         
-        if (! res.ok){
-            console.log(res.status)
-            console.log(body)
-        }
+        console.log(res.status)
+        console.log(body)
     }
     
     handleNameChange(event) {
