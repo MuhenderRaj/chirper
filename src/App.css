@@ -49,7 +49,7 @@ form {
   background-color: aliceblue;
 }
 
-#form-title, #form-content {
+#form-title, #form-content, #form-name {
   background-color: aqua;
   display: block;
   margin: auto;
@@ -62,6 +62,10 @@ form {
 
 #form-content {
   height: 50px;
+}
+
+#form-name {
+  height: 20px;
 }
 
 #submit-div {

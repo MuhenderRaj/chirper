@@ -9,7 +9,7 @@ class App extends React.Component {
         super(props);
         this.state = {
             posts: [],
-            username: "muhender",
+            username: "",
             formTitle: "",
             formContent: "",
         };
@@ -18,6 +18,7 @@ class App extends React.Component {
         this.postMessage = this.postMessage.bind(this)
         this.handleTitleChange = this.handleTitleChange.bind(this)
         this.handleContentChange = this.handleContentChange.bind(this)
+        this.handleNameChange = this.handleNameChange.bind(this)
     }
 
     componentDidMount() {
@@ -60,15 +61,24 @@ class App extends React.Component {
 
     async postMessage(event) {
         event.preventDefault()
-        await fetch("https://cloudflare-hiring-project.muhender.workers.dev/posts", {
+        
+        let res = await fetch("https://cloudflare-hiring-project.muhender.workers.dev/posts", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({username: this.state.username, title: this.state.formTitle, content: this.state.formContent}),
             }
-        ).then(res => res.json())
-        .then(res => this.setState({posts: res}))
-        .catch(error => console.error(error))
-        console.log("success")
+        )
+
+        let body = await res.json()
+        this.setState({posts: body})
+        
+        if (! res.ok){
+            console.log(res.status)
+        }
+    }
+    
+    handleNameChange(event) {
+        this.setState({username: event.target.value})
     }
     
     handleTitleChange(event) {
@@ -90,9 +100,10 @@ class App extends React.Component {
                     <section id="post-chirp">
                         <h1>Chirp your thoughts!</h1>
                         <form onSubmit={this.postMessage}>
-                            <input type="text" id="form-title" value={this.state.formTitle} onChange={this.handleTitleChange} />
+                            <input type="text" id="form-title" value={this.state.formTitle} onChange={this.handleTitleChange} placeholder="title" />
                             {/* <input type={"text"} name={"content"} onChange={this.handleContentChange} /> */}
-                            <textarea id="form-content" value={this.state.formContent} onChange={this.handleContentChange} placeholder={"chirp here"}></textarea>
+                            <textarea id="form-content" value={this.state.formContent} onChange={this.handleContentChange} placeholder="chirp here"></textarea>
+                            <input type="text" id="form-name" value={this.state.username} onChange={this.handleNameChange} placeholder="name" />
                 
                             <div id="submit-div">
                                 <input type="submit" id="form-submit" value="Chirp" />
