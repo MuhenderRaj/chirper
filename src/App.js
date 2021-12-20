@@ -65,7 +65,7 @@ class App extends React.Component {
         let res = await fetch("https://cloudflare-hiring-project.muhender.workers.dev/posts", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                withCredentials: "include",
+                credentials: "include",
                 body: JSON.stringify({username: this.state.username, title: this.state.formTitle, content: this.state.formContent}),
             }
         )
