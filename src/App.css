@@ -1,67 +1,68 @@
 .App {
   text-align: center;
+  background-color: rgb(241, 251, 255);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+header {
+  background-color: aqua;
+  text-align: left;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#main-chirps {
+  text-align: center;
+  display: inline-block;
+  width: 60vw;
+  min-width: 500px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+h1 {
+  margin: 0;
+  padding: 5px 50px;
 }
 
 ul {
   list-style-type: none;
+  padding: 0;
 }
 
 #post-chirp {
+  background-color: aqua;
   margin: 40px;
+  box-shadow: 2px 2px 10px;
+  border-radius: 10px;
+  padding: 0px;
+}
+
+#post-chirp h2 {
+  background-color: rgb(0, 217, 255);
+  padding: 20px 30px;
+  margin: 0;
+  border-radius: 10px;
 }
 
 form {
-  background-color: aliceblue;
+  padding: 10px;
 }
 
 #form-title, #form-content, #form-name {
-  background-color: aqua;
+  background-color: rgb(238, 253, 253);
   display: block;
   margin: auto;
-  width: 60vw;
+  width: 90%;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  border-width: 2px;
+  border-style: inset;
+  border-color: aqua;
 }
 
 #form-title {
   height: 20px;
+  font-size: 1.2em;
 }
 
 #form-content {
   height: 50px;
+  resize: none;
 }
 
 #form-name {
@@ -70,14 +71,21 @@ form {
 
 #submit-div {
   text-align: right;
-  width: 60vw;
+  width: 92%;
   display: block;
   margin: auto;
 }
 
 #form-submit {
-  background-color: aqua;
-  width: 20vw;
+  background-color: rgb(0, 217, 255);
+  width: 30%;
   height: 30px;
+  border-color: aqua;
 }
 
+#error {
+  color: red;
+  font-size: 12px;
+  text-align: left;
+  padding: 0px 20px;
+}

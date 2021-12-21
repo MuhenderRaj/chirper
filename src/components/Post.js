@@ -9,8 +9,8 @@ class Post extends React.Component {
     render() {
         return (
             <section className="post-container">
-                <h1 className="post-title">{this.props.title}</h1>
-                <h3 className="post-author">{this.props.username}</h3>
+                <h2 className="post-title">{this.props.title}</h2>
+                <h3 className="post-author">{this.props.username} chirps:</h3>
                 <p className="post-content">{this.props.content}</p>
             </section>
         );

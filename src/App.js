@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import Post from './components/Post';
 import './App.css';
 import React from 'react';
@@ -12,28 +11,18 @@ class App extends React.Component {
             username: "",
             formTitle: "",
             formContent: "",
+            errorText: "",
         };
 
+        this.setPosts = this.setPosts.bind(this)
         this.getPosts = this.getPosts.bind(this)
         this.postMessage = this.postMessage.bind(this)
         this.handleTitleChange = this.handleTitleChange.bind(this)
         this.handleContentChange = this.handleContentChange.bind(this)
         this.handleNameChange = this.handleNameChange.bind(this)
     }
-
-    componentDidMount() {
-        this.interval = setInterval(
-            () => {
-                fetch(
-                    "https://cloudflare-hiring-project.muhender.workers.dev/posts"
-                ) 
-                .then(res => res.json())
-                .then(res => this.setState({posts: res}))
-                .catch(error => console.error(error))
-            }, 
-            10000
-        );
-        
+    
+    getPosts() {
         fetch(
             "https://cloudflare-hiring-project.muhender.workers.dev/posts"
         ) 
@@ -42,11 +31,20 @@ class App extends React.Component {
         .catch(error => console.error(error))
     }
 
+    componentDidMount() {
+        this.interval = setInterval(
+            this.getPosts, 
+            10000
+        );
+        
+        this.getPosts()
+    }
+
     componentWillUnmount() {
         clearInterval(this.interval);
     }
     
-    getPosts(posts) {
+    setPosts(posts) {
         var listOfPosts = []
         for (let i = posts.length - 1; i >= 0; i--) {
             listOfPosts.push(
@@ -72,8 +70,13 @@ class App extends React.Component {
 
         let body = await res.text()
         
-        console.log(res.status)
-        console.log(body)
+        if (body === "success") {
+            this.getPosts()
+            this.setState({errorText: "", formTitle: "", formContent: ""})
+        }
+        else {
+            this.setState({errorText: body})
+        }
     }
     
     handleNameChange(event) {
@@ -91,29 +94,30 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <section id="sidebar">
-                   {/* TODO just to decrease chirp window width, which looks very wide and bad */}
-                </section>
+                <header>
+                    <h1>Chirper</h1>
+                </header>
 
-                <section>
+                <section id="main-chirps">
                     <section id="post-chirp">
-                        <h1>Chirp your thoughts!</h1>
+                        <h2>Chirp your thoughts!</h2>
                         <form onSubmit={this.postMessage}>
-                            <input type="text" id="form-title" value={this.state.formTitle} onChange={this.handleTitleChange} placeholder="title" />
+                            <input type="text" id="form-title" value={this.state.formTitle} onChange={this.handleTitleChange} placeholder="title" required/>
                             {/* <input type={"text"} name={"content"} onChange={this.handleContentChange} /> */}
-                            <textarea id="form-content" value={this.state.formContent} onChange={this.handleContentChange} placeholder="chirp here"></textarea>
-                            <input type="text" id="form-name" value={this.state.username} onChange={this.handleNameChange} placeholder="name" />
-                
+                            <textarea id="form-content" value={this.state.formContent} onChange={this.handleContentChange} placeholder="chirp here" required></textarea>
+                            <input type="text" id="form-name" value={this.state.username} onChange={this.handleNameChange} placeholder="name" required/>
+
+                            <p id="error">{this.state.errorText}</p>
+
                             <div id="submit-div">
                                 <input type="submit" id="form-submit" value="Chirp" />
                             </div>
                         </form>
                     </section>
                     <section>
-                        <ul>{this.getPosts(this.state.posts)}</ul>
+                        <ul>{this.setPosts(this.state.posts)}</ul>
                     </section>
                 </section>
-
             </div>
         );
     }
